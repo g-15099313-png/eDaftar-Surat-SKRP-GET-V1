@@ -218,27 +218,121 @@ Semua aktiviti pengguna direkodkan dalam sheet "ActivityLog":
 
 ## 🐛 Penyelesaian Masalah
 
-### Masalah Biasa
+### Masalah: Maklumat tidak boleh disimpan
 
-#### 1. Fail tidak dapat dimuat naik
-- Periksa saiz fail (maksimum 5MB)
-- Pastikan format fail adalah PDF atau Word
-- Periksa kebenaran Google Drive
+#### Punca 1: Konfigurasi tidak lengkap
+**Gejala**: Mesej "Konfigurasi tidak lengkap" muncul
+**Penyelesaian**:
+1. Pastikan URL Google Apps Script diisi dalam `config.js`
+2. Pastikan ID spreadsheet diisi dalam `google-apps-script.gs`
+3. Rujuk `SETUP.md` untuk panduan lengkap
 
-#### 2. Data tidak disimpan
-- Periksa URL Google Apps Script
-- Periksa ID spreadsheet
-- Periksa log error dalam console
+#### Punca 2: Google Apps Script tidak di-deploy
+**Gejala**: Error "Failed to fetch" atau "Network error"
+**Penyelesaian**:
+1. Pastikan Google Apps Script di-deploy sebagai Web App
+2. Pastikan access di-set kepada "Anyone"
+3. Periksa URL Web App betul
 
-#### 3. Antara muka tidak responsif
-- Pastikan fail CSS dimuat dengan betul
-- Periksa console untuk error JavaScript
-- Cuba refresh halaman
+#### Punca 3: ID Spreadsheet tidak betul
+**Gejala**: Error "Spreadsheet not found" atau data tidak tersimpan
+**Penyelesaian**:
+1. Periksa ID spreadsheet dalam `google-apps-script.gs`
+2. Pastikan spreadsheet wujud dan boleh diakses
+3. Pastikan Google Apps Script mempunyai kebenaran
 
-### Log Error
-- Buka Developer Tools (F12)
-- Lihat tab Console untuk error
-- Periksa tab Network untuk masalah API
+#### Punca 4: CORS Error
+**Gejala**: Error "CORS policy" dalam console
+**Penyelesaian**:
+1. Jalankan aplikasi melalui web server (bukan file://)
+2. Gunakan extension Live Server di VS Code
+3. Atau jalankan: `python -m http.server 8000`
+
+### Masalah: Fail tidak dapat dimuat naik
+
+#### Punca 1: ID Folder Google Drive tidak betul
+**Gejala**: Error "Folder not found" atau fail tidak tersimpan
+**Penyelesaian**:
+1. Periksa ID folder dalam `google-apps-script.gs`
+2. Pastikan folder wujud dan boleh diakses
+3. Pastikan Google Apps Script mempunyai kebenaran
+
+#### Punca 2: Saiz fail terlalu besar
+**Gejala**: Error "File too large"
+**Penyelesaian**:
+1. Pastikan fail tidak melebihi 5MB
+2. Gunakan format fail yang dibenarkan (PDF, DOC, DOCX)
+
+#### Punca 3: Format fail tidak dibenarkan
+**Gejala**: Error "File type not allowed"
+**Penyelesaian**:
+1. Pastikan fail dalam format PDF, DOC, atau DOCX
+2. Periksa extension fail
+
+### Masalah: Antara muka tidak responsif
+
+#### Punca 1: Fail tidak dimuat dengan betul
+**Gejala**: Antara muka rosak atau tidak berfungsi
+**Penyelesaian**:
+1. Periksa console browser (F12) untuk error
+2. Pastikan semua fail (HTML, CSS, JS) dimuat
+3. Cuba refresh halaman
+
+#### Punca 2: JavaScript error
+**Gejala**: Fungsi tidak berfungsi atau error dalam console
+**Penyelesaian**:
+1. Buka Developer Tools (F12)
+2. Lihat tab Console untuk error
+3. Periksa tab Network untuk masalah API
+
+### Debugging Langkah demi Langkah
+
+#### Langkah 1: Periksa Console Browser
+1. Buka Developer Tools (F12)
+2. Lihat tab Console untuk error
+3. Lihat tab Network untuk masalah API
+
+#### Langkah 2: Periksa Google Apps Script Logs
+1. Buka Google Apps Script
+2. Klik "Executions" untuk lihat log
+3. Periksa error yang berlaku
+
+#### Langkah 3: Test API Secara Langsung
+```javascript
+// Test dalam console browser
+fetch('URL_GOOGLE_APPS_SCRIPT_ANDA', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        action: 'add',
+        suratType: 'surat-masuk',
+        suratData: {
+            noRujukan: 'TEST/2024/001',
+            tarikhTerima: '2024-01-01',
+            pengirim: 'Test',
+            subjek: 'Test Subject',
+            status: 'Baru',
+            tindakanSiapa: 'Guru Besar'
+        },
+        user: 'Guru Besar'
+    })
+})
+.then(response => response.json())
+.then(data => console.log(data));
+```
+
+### Checklist Penyelesaian Masalah
+
+- [ ] URL Google Apps Script betul dalam `config.js`
+- [ ] ID spreadsheet betul dalam `google-apps-script.gs`
+- [ ] ID folder Google Drive betul dalam `google-apps-script.gs`
+- [ ] Google Apps Script di-deploy sebagai Web App
+- [ ] Access di-set kepada "Anyone"
+- [ ] Aplikasi dijalankan melalui web server
+- [ ] Console browser tidak menunjukkan error
+- [ ] Google Apps Script logs tidak menunjukkan error
 
 ## 📞 Sokongan
 
@@ -264,3 +358,4 @@ Projek ini dibangunkan untuk kegunaan dalaman SKRP GET.
 ---
 
 **Dibangunkan dengan ❤️ untuk SKRP GET**
+

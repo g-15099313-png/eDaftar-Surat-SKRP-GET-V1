@@ -1,189 +1,187 @@
-# 🚀 Panduan Pemasangan EDAFTAR SURAT SKRP GET
+# PANDUAN SETUP EDAFTAR SURAT SKRP GET
 
-Panduan langkah demi langkah untuk memasang aplikasi EDAFTAR SURAT SKRP GET.
+## 🚨 MASALAH YANG PERLU DISELESAIKAN
 
-## 📋 Senarai Semak Pemasangan
+### 1. Konfigurasi Google Apps Script
 
-- [ ] Google Spreadsheet dibuat
-- [ ] Google Apps Script disediakan
-- [ ] Google Drive folder dibuat
-- [ ] Konfigurasi frontend dikemaskini
-- [ ] Aplikasi diuji
-
-## 🔧 Langkah 1: Persediaan Google Spreadsheet
-
-### 1.1 Buat Spreadsheet Surat Masuk
+#### Langkah 1: Buat Google Spreadsheet
 1. Buka [Google Sheets](https://sheets.google.com)
-2. Klik "Blank" untuk spreadsheet baru
-3. Namakan sebagai "Surat Masuk SKRP GET"
-4. Catat ID dari URL: `https://docs.google.com/spreadsheets/d/[ID_INI]/edit`
+2. Buat 2 spreadsheet baru:
+   - `Surat Masuk SKRP GET`
+   - `Surat Keluar SKRP GET`
+3. Catat ID spreadsheet dari URL (selepas `/d/` dan sebelum `/edit`)
 
-### 1.2 Buat Spreadsheet Surat Keluar
-1. Buat spreadsheet baru lagi
-2. Namakan sebagai "Surat Keluar SKRP GET"
-3. Catat ID dari URL
-
-### 1.3 Format Spreadsheet
-Setiap spreadsheet perlu mempunyai header berikut:
-```
-A1: ID
-B1: No. Rujukan
-C1: Tarikh Terima
-D1: Pengirim
-E1: Subjek
-F1: Status
-G1: Tindakan Siapa
-H1: Fail Surat
-I1: Dicipta Oleh
-J1: Dicipta Pada
-```
-
-## 🔧 Langkah 2: Persediaan Google Apps Script
-
-### 2.1 Buat Projek Google Apps Script
+#### Langkah 2: Buat Google Apps Script
 1. Buka [Google Apps Script](https://script.google.com)
-2. Klik "New project"
-3. Namakan projek sebagai "EDAFTAR SURAT SKRP GET"
-
-### 2.2 Salin Kod Backend
-1. Padam kod sedia ada dalam editor
-2. Salin semua kod dari fail `google-apps-script.gs`
-3. Ganti ID spreadsheet dalam kod:
+2. Buat projek baru
+3. Salin kod dari `google-apps-script.gs`
+4. **PENTING**: Ganti ID spreadsheet dalam kod:
    ```javascript
    const SURAT_MASUK_SHEET_ID = 'ID_SPREADSHEET_SURAT_MASUK_ANDA';
    const SURAT_KELUAR_SHEET_ID = 'ID_SPREADSHEET_SURAT_KELUAR_ANDA';
-   ```
-
-### 2.3 Deploy sebagai Web App
-1. Klik butang "Deploy" > "New deployment"
-2. Pilih "Web app"
-3. Isi maklumat:
-   - **Description**: EDAFTAR SURAT SKRP GET v1.0
-   - **Execute as**: Me
-   - **Who has access**: Anyone
-4. Klik "Deploy"
-5. Catat URL Web App yang diberikan
-
-## 🔧 Langkah 3: Persediaan Google Drive
-
-### 3.1 Buat Folder Fail
-1. Buka [Google Drive](https://drive.google.com)
-2. Klik "New" > "Folder"
-3. Namakan sebagai "EDAFTAR SURAT SKRP GET - Files"
-4. Catat ID folder dari URL
-
-### 3.2 Kemaskini Google Apps Script
-1. Kembali ke Google Apps Script
-2. Ganti ID folder dalam kod:
-   ```javascript
    const FILES_FOLDER_ID = 'ID_FOLDER_GOOGLE_DRIVE_ANDA';
    ```
-3. Deploy semula Web App
 
-## 🔧 Langkah 4: Konfigurasi Frontend
+#### Langkah 3: Deploy sebagai Web App
+1. Klik "Deploy" > "New deployment"
+2. Pilih "Web app"
+3. Set access to "Anyone"
+4. Deploy dan catat URL
 
-### 4.1 Kemaskini config.js
-1. Buka fail `config.js`
-2. Ganti URL Google Apps Script:
-   ```javascript
-   GOOGLE_APPS_SCRIPT_URL: 'URL_WEB_APP_ANDA'
-   ```
+#### Langkah 4: Buat Folder Google Drive
+1. Buka [Google Drive](https://drive.google.com)
+2. Buat folder baru: `EDAFTAR SURAT SKRP GET - Files`
+3. Catat ID folder dari URL
 
-### 4.2 Kemaskini Maklumat Sekolah (Pilihan)
-1. Dalam `config.js`, kemaskini maklumat sekolah:
-   ```javascript
-   SCHOOL_INFO: {
-       name: 'Sekolah Kebangsaan SKRP GET',
-       address: 'Alamat Sekolah Anda',
-       phone: '03-XXXX XXXX',
-       email: 'skrpget@moe.edu.my',
-       website: 'https://skrpget.edu.my'
-   }
-   ```
+### 2. Kemaskini Konfigurasi Frontend
 
-## 🔧 Langkah 5: Ujian Aplikasi
+#### Langkah 1: Kemaskini config.js
+Buka `config.js` dan ganti URL Google Apps Script:
+```javascript
+GOOGLE_APPS_SCRIPT_URL: 'URL_GOOGLE_APPS_SCRIPT_WEB_APP_ANDA'
+```
 
-### 5.1 Jalankan Aplikasi
-1. Buka fail `index.html` dalam pelayar web
-2. Atau gunakan server tempatan:
-   ```bash
-   python -m http.server 8000
-   # Buka http://localhost:8000
-   ```
+#### Langkah 2: Kemaskini google-apps-script.gs
+Buka `google-apps-script.gs` dan ganti ID spreadsheet:
+```javascript
+const SURAT_MASUK_SHEET_ID = 'ID_SPREADSHEET_SURAT_MASUK_ANDA';
+const SURAT_KELUAR_SHEET_ID = 'ID_SPREADSHEET_SURAT_KELUAR_ANDA';
+const FILES_FOLDER_ID = 'ID_FOLDER_GOOGLE_DRIVE_ANDA';
+```
 
-### 5.2 Ujian Fungsi Asas
-1. **Pilih Pengguna**: Klik butang pengguna berbeza
-2. **Tambah Surat**: Klik "Tambah Surat Baru"
-3. **Muat Naik Fail**: Cuba muat naik fail PDF
-4. **Cari & Filter**: Uji fungsi carian
-5. **Edit & Padam**: Uji fungsi edit dan padam
+## 🔧 PENYELESAIAN MASALAH
 
-### 5.3 Periksa Data
-1. Buka Google Spreadsheet
-2. Pastikan data tersimpan dengan betul
-3. Periksa folder Google Drive untuk fail yang dimuat naik
+### Masalah: Maklumat tidak boleh disimpan
 
-## 🔧 Langkah 6: Penyelenggaraan
+#### Punca 1: URL Google Apps Script tidak betul
+**Penyelesaian:**
+1. Pastikan URL Google Apps Script betul dalam `config.js`
+2. Pastikan Google Apps Script sudah di-deploy sebagai Web App
+3. Pastikan access di-set kepada "Anyone"
 
-### 6.1 Backup Berkala
-1. Jalankan fungsi backup dalam Google Apps Script:
-   ```javascript
-   function backupData() {
-       // Kod backup automatik
-   }
-   ```
+#### Punca 2: ID Spreadsheet tidak betul
+**Penyelesaian:**
+1. Pastikan ID spreadsheet betul dalam `google-apps-script.gs`
+2. Pastikan spreadsheet wujud dan boleh diakses
+3. Pastikan Google Apps Script mempunyai kebenaran untuk mengakses spreadsheet
 
-### 6.2 Log Aktiviti
-1. Periksa sheet "ActivityLog" dalam spreadsheet
-2. Pastikan semua aktiviti direkodkan
+#### Punca 3: CORS Error
+**Penyelesaian:**
+1. Jalankan aplikasi melalui web server (bukan file://)
+2. Gunakan extension seperti Live Server di VS Code
+3. Atau jalankan: `python -m http.server 8000`
 
-### 6.3 Kemaskini Sistem
-1. Backup data sedia ada
-2. Kemaskini fail frontend
-3. Kemaskini Google Apps Script
-4. Test semua fungsi
+### Masalah: Fail tidak boleh dimuat naik
 
-## 🐛 Penyelesaian Masalah
+#### Punca 1: ID Folder Google Drive tidak betul
+**Penyelesaian:**
+1. Pastikan ID folder betul dalam `google-apps-script.gs`
+2. Pastikan folder wujud dan boleh diakses
+3. Pastikan Google Apps Script mempunyai kebenaran untuk mengakses folder
 
-### Masalah: "Konfigurasi tidak lengkap"
-**Penyelesaian**: Pastikan URL Google Apps Script diisi dalam `config.js`
+#### Punca 2: Saiz fail terlalu besar
+**Penyelesaian:**
+1. Pastikan fail tidak melebihi 5MB
+2. Gunakan format fail yang dibenarkan (PDF, DOC, DOCX)
 
-### Masalah: "Gagal menyimpan data"
-**Penyelesaian**: 
-1. Periksa ID spreadsheet dalam Google Apps Script
-2. Pastikan Web App di-deploy dengan betul
-3. Periksa kebenaran Google Apps Script
+## 📋 LANGKAH-LANGKAH SETUP LENGKAP
 
-### Masalah: "Fail tidak dapat dimuat naik"
-**Penyelesaian**:
-1. Periksa ID folder Google Drive
-2. Pastikan saiz fail tidak melebihi 5MB
-3. Pastikan format fail adalah PDF atau Word
+### 1. Persediaan Google Workspace
+```bash
+# 1. Buat Google Spreadsheet untuk Surat Masuk
+# 2. Buat Google Spreadsheet untuk Surat Keluar
+# 3. Buat Google Drive Folder untuk fail
+# 4. Catat semua ID
+```
 
-### Masalah: "Antara muka tidak responsif"
-**Penyelesaian**:
-1. Periksa console browser (F12)
-2. Pastikan semua fail dimuat dengan betul
-3. Cuba refresh halaman
+### 2. Setup Google Apps Script
+```javascript
+// 1. Buka https://script.google.com
+// 2. Buat projek baru
+// 3. Salin kod dari google-apps-script.gs
+// 4. Ganti ID spreadsheet dan folder
+// 5. Deploy sebagai Web App
+```
 
-## 📞 Bantuan Teknikal
+### 3. Setup Frontend
+```bash
+# 1. Kemaskini config.js dengan URL Google Apps Script
+# 2. Jalankan aplikasi melalui web server
+# 3. Test fungsi tambah, edit, padam
+```
 
-Jika menghadapi masalah:
-1. Periksa log error dalam console browser
-2. Periksa log dalam Google Apps Script
-3. Rujuk dokumentasi lengkap dalam `README.md`
+### 4. Test Aplikasi
+```bash
+# 1. Test tambah surat baru
+# 2. Test edit surat sedia ada
+# 3. Test padam surat
+# 4. Test muat naik fail
+# 5. Test carian dan filter
+```
 
-## ✅ Senarai Semak Akhir
+## 🐛 DEBUGGING
 
-- [ ] Aplikasi dapat dibuka tanpa error
-- [ ] Pengguna dapat dipilih
-- [ ] Surat dapat ditambah
-- [ ] Fail dapat dimuat naik
-- [ ] Data tersimpan dalam spreadsheet
-- [ ] Fungsi carian berfungsi
-- [ ] Fungsi edit dan padam berfungsi
-- [ ] Antara muka responsif pada mobile
+### Periksa Console Browser
+1. Buka Developer Tools (F12)
+2. Lihat tab Console untuk error
+3. Lihat tab Network untuk masalah API
+
+### Periksa Google Apps Script Logs
+1. Buka Google Apps Script
+2. Klik "Executions" untuk lihat log
+3. Periksa error yang berlaku
+
+### Test API Secara Langsung
+```javascript
+// Test dalam console browser
+fetch('URL_GOOGLE_APPS_SCRIPT_ANDA', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        action: 'add',
+        suratType: 'surat-masuk',
+        suratData: {
+            noRujukan: 'TEST/2024/001',
+            tarikhTerima: '2024-01-01',
+            pengirim: 'Test',
+            subjek: 'Test Subject',
+            status: 'Baru',
+            tindakanSiapa: 'Guru Besar'
+        },
+        user: 'Guru Besar'
+    })
+})
+.then(response => response.json())
+.then(data => console.log(data));
+```
+
+## 📞 BANTUAN
+
+Jika masih menghadapi masalah:
+
+1. **Periksa semua ID dan URL** - Pastikan semua ID spreadsheet dan folder betul
+2. **Periksa kebenaran** - Pastikan Google Apps Script mempunyai kebenaran yang diperlukan
+3. **Periksa console** - Lihat error dalam console browser
+4. **Test API** - Test API secara langsung untuk mengesan masalah
+
+## ✅ CHECKLIST SETUP
+
+- [ ] Google Spreadsheet untuk Surat Masuk dibuat
+- [ ] Google Spreadsheet untuk Surat Keluar dibuat
+- [ ] Google Drive Folder untuk fail dibuat
+- [ ] ID semua spreadsheet dan folder dicatat
+- [ ] Google Apps Script dibuat dan di-deploy
+- [ ] URL Google Apps Script dikemaskini dalam config.js
+- [ ] ID spreadsheet dikemaskini dalam google-apps-script.gs
+- [ ] Aplikasi dijalankan melalui web server
+- [ ] Test fungsi tambah surat
+- [ ] Test fungsi edit surat
+- [ ] Test fungsi padam surat
+- [ ] Test muat naik fail
 
 ---
 
-**Selamat menggunakan EDAFTAR SURAT SKRP GET! 🎉**
+**PENTING**: Pastikan semua ID dan URL dikemaskini dengan betul sebelum menggunakan aplikasi!
+

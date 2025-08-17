@@ -2,9 +2,10 @@
 // Deploy sebagai Web App untuk integrasi dengan frontend
 
 // Spreadsheet IDs - Ganti dengan ID spreadsheet anda
-const SURAT_MASUK_SHEET_ID = 'YOUR_SURAT_MASUK_SPREADSHEET_ID';
-const SURAT_KELUAR_SHEET_ID = 'YOUR_SURAT_KELUAR_SPREADSHEET_ID';
-const FILES_FOLDER_ID = 'YOUR_GOOGLE_DRIVE_FOLDER_ID';
+// Sila buat spreadsheet baru dan ganti ID di bawah
+const SURAT_MASUK_SHEET_ID = '19ZKovJe7eYS1eVXGs62EaFsOdA_1UQIbXrKFr63h_Fs';
+const SURAT_KELUAR_SHEET_ID = '1mxi9rgNX237dAD70hJnKRmLVke4oFdadox2VPqwj2SU';
+const FILES_FOLDER_ID = '1ukwzk7ogCNehCEUCmYlBx-_uQ27i5W_s';
 
 // Main function to handle HTTP requests
 function doPost(e) {
@@ -578,3 +579,4 @@ function getFileDownloadUrl(fileId) {
     return null;
   }
 }
+
